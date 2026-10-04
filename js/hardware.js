@@ -871,8 +871,8 @@ const setDisplayBrightness = (brightness, callback = null) => {
     if (typeof callback === "function") callback(null, "Not supported");
     return;
   }
-  if (typeof brightness !== "number" || brightness < 1 || brightness > 100) {
-    console.error("Brightness must be a number between 1 and 100");
+  if (typeof brightness !== "number" || brightness < 0 || brightness > 100) {
+    console.error("Brightness must be a number between 0 and 100");
     if (typeof callback === "function") callback(null, "Invalid brightness");
     return;
   }

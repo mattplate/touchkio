@@ -495,6 +495,7 @@ const initDisplay = () => {
     device: INTEGRATION.device,
     ...(HARDWARE.support.displayBrightness && {
       supported_color_modes: ["brightness"],
+      color_mode_state_topic: `${root}/brightness/color_mode/state`,
       brightness_command_topic: `${root}/brightness/set`,
       brightness_state_topic: `${root}/brightness/state`,
       brightness_scale: 100,
@@ -542,7 +543,12 @@ const updateDisplay = async () => {
   }
   const status = hardware.getDisplayStatus();
   const brightness = hardware.getDisplayBrightness();
-  publishState("display/brightness", brightness);
+  if (HARDWARE.support.displayBrightness) {
+    publishState("display/brightness/color_mode", "brightness");
+    if (brightness !== null) {
+      publishState("display/brightness", brightness);
+    }
+  }
   publishState("display/power", status);
 };
 
